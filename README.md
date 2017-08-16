@@ -17,5 +17,18 @@
 
 [사공이 많은 할일 목록 애플리케이션 기능 목록](https://docs.google.com/spreadsheets/d/11WQDfvgTCVr6ciEZcNvdnsOWow_m7ygDC9w6EnxbO2g/edit?usp=sharing)
 
+## 앱 설치방법
+
+- 저장소를 클론합니다.
+- 의존 패키지 설치
+    - composer install
+- 구동 환경 설정 파일 복사 
+    - cp .env.example .env
+    - 복사 후엔 자신의 환경에 맞게 .env를 수정하세요.
+- 키 생성
+    - php artisan key:generate
+- 데이터베이스 마이그레이션
+    - php artisan migrate
+
 ## 후원
 라라벨 꾸준 코딩 모임은 XE가 후원해주고 있습니다.
