@@ -10,6 +10,31 @@
 ### 온라인
 이 저장소를 포크하시고 개발한 내용을 풀 리퀘스트해주세요.
 
+#### 이 저장소(smartbos/hong-todo)의 업데이트된 내용을 내가 포크한 저장소에 반영하는 방법
+
+이 저장소를 upstream 이라는 이름으로 추가합니다.
+
+```
+git remote add upstream https://github.com/smartbos/hong-todo.git
+```
+
+upstream 의 변경된 내용을 가져옵니다.
+
+```
+git fetch upstream
+```
+
+로컬 master 브랜치로 이동합니다.
+
+```
+git checkout master
+```
+
+upsteam/master를 로컬 master 브랜치로 병합합니다.
+
+```
+git merge upstream/master
+```
 ### 기능 제안
 만들어 보고 싶은 기능이 있다면 누구나 아래 문서에 기능을 추가해주세요.
 
