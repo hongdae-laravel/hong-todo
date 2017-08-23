@@ -40,10 +40,10 @@
             <form action="{{ url('task') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }}
 
+
             <!-- Task Name -->
               <div class="form-group">
                 <label for="task-name" class="col-sm-3 control-label">Task</label>
-
                 <div class="col-sm-6">
                   <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
                 </div>
@@ -78,9 +78,7 @@
               <tbody>
               @foreach ($tasks as $task)
                 <tr>
-                  <td class="table-text">
-                    <div>{{ $task->name }} </div>
-                  </td>
+                  <td class="table-text"><div><span>{{ $task->getFormattedDate($task) }}</span> {{ $task->name }}</div></td>
 
 
                   <!-- Task Delete Button -->
