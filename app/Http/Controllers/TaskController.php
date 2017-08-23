@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\TaskRepository;
+use App\Http\Requests\StoreTaskRequest;
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -15,24 +17,40 @@ class TaskController extends Controller
         $this->middleware('auth');
 
         $this->tasks = $tasks;
+
+
     }
 
     public function index(Request $request)
     {
+        $task = null;
+
         return view('tasks.index', [
-            'tasks' =>  $this->tasks->forUser($request->user()),
+            'tasks' => $this->tasks->forUser($request->user()),
+            'task' => $task,
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-        ]);
-
         $request->user()->tasks()->create([
             'name' => $request->name,
         ]);
+
+        return redirect('/tasks');
+    }
+
+    public function show(Task $task)
+    {
+        $tasks = Auth::user()->tasks()->get();
+        return view('tasks.index', ['tasks' => $tasks, 'task' => $task]);
+    }
+
+    public function update(StoreTaskRequest $request, $id)
+    {
+        $task = Task::find($id);
+        $task->name = $request->input('name');
+        $task->save();
 
         return redirect('/tasks');
     }
