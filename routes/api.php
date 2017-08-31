@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Route::group(['middleware' => 'auth.api'], function () {
+    Route::post('/tasks/{task}/tag', 'TaskController@storeTag');
+    Route::delete('/tasks/{task}/tag', 'TaskController@deleteTag');
+//});
