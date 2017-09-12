@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('append_css')
+  <link href="{{ elixir('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
   <div class="container">
     <div class="col-sm-offset-2 col-sm-8">
@@ -47,6 +51,19 @@
                   <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
                 </div>
               </div>
+            <!-- 달력 컴포넌트 -->
+              <div class="form-group">
+                <label for="due-date" class="col-sm-3 control-label">Due Date</label>
+
+                <div class="col-sm-6">
+                  <div class='input-group date' id='due-date'>
+                      <input type='text' class="form-control" name="due_date" />
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+                </div>
+              </div>
 
               <!-- Add Task Button -->
               <div class="form-group">
@@ -76,11 +93,15 @@
               </thead>
               <tbody>
               @foreach ($tasks as $task)
+
                 <tr data-id="{{ $task->id }}">
                   <td class="table-text">
-                    <div><span>{{ $task->getFormattedDate($task) }}</span> {{ $task->name }}</div>
+                    <div><span>{{ $task->getFormattedDate($task) }}</span> 
+                    <span class="label label-default" data-toggle="tooltip" data-placement="top" title="{{ $task->due_date }}">{{ $task->getDdays($now) }}</span> 
+                    {{ $task->name }}</div>
                     <input type="text" class="tags" name="tags" value="{{ $task->getTagNamesToCsv($task) }}" data-role="tagsinput" placeholder="Tag (comma separated)">
                   </td>
+
                   <!-- Task Delete Button -->
                   <td>
                     <form action="{{ url('task/' . $task->id) }}" method="POST">
@@ -135,4 +156,16 @@
             });
         });
     </script>
+@endsection
+
+@section('append_scripts')
+  <script src="{{ elixir('js/moment.js') }}"></script>
+  <script src="{{ elixir('js/bootstrap-datetimepicker.min.js') }}"></script>
+  <script type="text/javascript">
+  $( document ).ready(function() { // console.log('document-ready!');
+    $('[data-toggle="tooltip"]').tooltip(); // 툴팁 작동 (bootstrap)
+    $('#due-date').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss'}); // 데이터 피커 작동
+      // 부트스트랩 데이트 피커 : https://github.com/Eonasdan/bootstrap-datetimepicker/
+  });
+  </script>
 @endsection
