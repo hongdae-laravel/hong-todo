@@ -17,9 +17,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/tasks', 'TaskController@index');
-Route::post('/task', 'TaskController@store');
-Route::get('/task/{task}', 'TaskController@show');
-Route::delete('/task/{task}', 'TaskController@destroy');
-Route::put('/task/{task}', 'TaskController@update');
+Route::group(['middleware' => 'auth', 'prefix' => 'tasks'], function () {
+    Route::get('/', 'TaskController@index');
+    Route::post('/', 'TaskController@store');
+    Route::get('/{task}', 'TaskController@show');
+    Route::delete('/{task}', 'TaskController@destroy');
+    Route::put('/{task}', 'TaskController@update');
+});
 // #인증 관련 tasks로 리다이렉트

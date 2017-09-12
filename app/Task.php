@@ -3,10 +3,13 @@
 namespace App;
 
 use Carbon\Carbon;
+use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    use Taggable;
+
     protected $fillable = [
       'name',
       'due_date' // 완료일
@@ -24,6 +27,18 @@ class Task extends Model
         return $formattedDate->format($format);
     }
 
+
+    public function getTagNamesToCsv(Task $task)
+    {
+        if (empty($task->tagNames())) {
+            $result = "";
+        } else {
+            $result = implode(",", $task->tagNames());
+        }
+      
+      return $result;
+    }
+
     /* D-Day 구하기 */
     public function getDdays( $now )
     {
@@ -37,6 +52,7 @@ class Task extends Model
           $_days = (strtotime($due_date.' 00:00:00')-strtotime($now_date.' 00:00:00')) / 86400 ; // 24*60*60
           $result = 'D'.( ($_days < 0)?'+':'-' ).abs($_days);
         }
+
         return $result;
     }
 }

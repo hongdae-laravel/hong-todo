@@ -14,19 +14,17 @@ class TaskController extends Controller
 
     public function __construct(TaskRepository $tasks)
     {
-        $this->middleware('auth');
-
         $this->tasks = $tasks;
-
-
     }
 
     public function index(Request $request)
     {
         $task = null;
 
+        $tasks = $this->tasks->forUser($request->user());
+
         return view('tasks.index', [
-            'tasks' => $this->tasks->forUser($request->user()),
+            'tasks' => $tasks,
             'task' => $task,
             'now' => time() // 현재시간
         ]);
@@ -64,5 +62,17 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect('/tasks');
+    }
+
+    public function storeTag(Request $request, $id)
+    {
+        $task = Task::find($id);
+        $task->tag($request->input('tag'));
+    }
+
+    public function deleteTag(Request $request, $id)
+    {
+        $task = Task::find($id);
+        $task->untag($request->input('tag'));
     }
 }

@@ -44,7 +44,6 @@
             <form action="{{ url('task') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }}
 
-
             <!-- Task Name -->
               <div class="form-group">
                 <label for="task-name" class="col-sm-3 control-label">Task</label>
@@ -94,19 +93,21 @@
               </thead>
               <tbody>
               @foreach ($tasks as $task)
-                <tr>
-                  <td class="table-text"><div><span>{{ $task->getFormattedDate($task) }}</span>
-                    <span class="label label-default" data-toggle="tooltip" data-placement="top" title="{{ $task->due_date }}">{{ $task->getDdays($now) }}</span> {{ $task->name }}</div></td>
 
+                <tr data-id="{{ $task->id }}">
+                  <td class="table-text">
+                    <div><span>{{ $task->getFormattedDate($task) }}</span> 
+                    <span class="label label-default" data-toggle="tooltip" data-placement="top" title="{{ $task->due_date }}">{{ $task->getDdays($now) }}</span> 
+                    {{ $task->name }}</div>
+                    <input type="text" class="tags" name="tags" value="{{ $task->getTagNamesToCsv($task) }}" data-role="tagsinput" placeholder="Tag (comma separated)">
+                  </td>
 
                   <!-- Task Delete Button -->
                   <td>
-
-
-                    <form action="{{url('task/' . $task->id)}}" method="POST">
+                    <form action="{{ url('task/' . $task->id) }}" method="POST">
                       {{ csrf_field() }}
                       {{ method_field('DELETE') }}
-                      <a href="{{ url('task',['task' => $task->id])}}" class="btn btn-primary">
+                      <a href="{{ url('task',['task' => $task->id]) }}" class="btn btn-primary">
                         <i class="glyphicon glyphicon-edit"></i> Edit
                       </a>
                       <button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
@@ -123,6 +124,38 @@
       @endif
     </div>
   </div>
+@endsection
+
+@section('javascript')
+    <script>
+        $('.tags').on('itemAdded', function (event) {
+            var taskId = $(this).parents('tr').data('id');
+            var tag = event.item;
+
+            $.ajax({
+                url: '/api/tasks/'+ taskId +'/tag',
+                method: 'POST',
+                dataType: 'json',
+                data: { tag: tag }
+            }).done(function (res) {
+                console.log(res);
+            });
+        });
+
+        $('.tags').on('itemRemoved', function (event) {
+            var taskId = $(this).parents('tr').data('id');
+            var tag = event.item;
+
+            $.ajax({
+                url: '/api/tasks/'+ taskId +'/tag',
+                method: 'DELETE',
+                dataType: 'json',
+                data: { tag: tag }
+            }).done(function (res) {
+                console.log(res);
+            });
+        });
+    </script>
 @endsection
 
 @section('append_scripts')
