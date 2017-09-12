@@ -28,6 +28,7 @@ class TaskController extends Controller
         return view('tasks.index', [
             'tasks' => $this->tasks->forUser($request->user()),
             'task' => $task,
+            'now' => time() // 현재시간
         ]);
     }
 
@@ -35,6 +36,7 @@ class TaskController extends Controller
     {
         $request->user()->tasks()->create([
             'name' => $request->name,
+            'due_date' => $request->due_date // 완료일 추가
         ]);
 
         return redirect('/tasks');
