@@ -104,10 +104,10 @@
 
                   <!-- Task Delete Button -->
                   <td>
-                    <form action="{{ url('task/' . $task->id) }}" method="POST">
+                    <form action="{{ url('tasks/' . $task->id) }}" method="POST">
                       {{ csrf_field() }}
                       {{ method_field('DELETE') }}
-                      <a href="{{ url('task',['task' => $task->id]) }}" class="btn btn-primary">
+                      <a href="{{ url('tasks', ['task' => $task->id]) }}" class="btn btn-primary">
                         <i class="glyphicon glyphicon-edit"></i> Edit
                       </a>
                       <button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
