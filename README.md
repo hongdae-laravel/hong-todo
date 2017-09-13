@@ -12,42 +12,7 @@
 #### 코드 추가하기
 이 저장소를 포크하시고 개발한 내용을 풀 리퀘스트해주세요.
 
-##### 이 저장소(smartbos/hong-todo)의 업데이트된 내용을 내가 포크한 저장소에 반영하는 방법
-
-이 저장소를 upstream 이라는 이름으로 추가합니다.
-
-```
-git remote add upstream https://github.com/smartbos/hong-todo.git
-```
-
-upstream 의 변경된 내용을 가져옵니다.
-
-```
-git fetch upstream
-```
-
-로컬 master 브랜치로 이동합니다.
-
-```
-git checkout master
-```
-
-upsteam/master를 로컬 master 브랜치로 병합합니다.
-
-```
-git merge upstream/master
-```
-
-#### 코드 리뷰
-
-[풀 리퀘스트](https://github.com/smartbos/hong-todo/pulls)를 리뷰해주세요.
-
-### 기능 제안
-만들어 보고 싶은 기능이 있다면 누구나 아래 문서에 기능을 추가해주세요.
-
-[사공이 많은 할일 목록 애플리케이션 기능 목록](https://docs.google.com/spreadsheets/d/11WQDfvgTCVr6ciEZcNvdnsOWow_m7ygDC9w6EnxbO2g/edit?usp=sharing)
-
-## 앱 설치방법
+##### 앱 설치방법
 
 - 저장소를 클론합니다.
 - 의존 패키지 설치
@@ -59,6 +24,29 @@ git merge upstream/master
     - php artisan key:generate
 - 데이터베이스 마이그레이션
     - php artisan migrate
+    
+##### 이 저장소(smartbos/hong-todo)의 업데이트된 내용을 내가 포크한 저장소에 반영하는 방법
+
+이 저장소를 upstream 이라는 이름으로 추가합니다.
+
+```
+git remote add upstream https://github.com/smartbos/hong-todo.git
+```
+
+upstream 의 변경된 내용을 가져와서 병합합니다.
+
+```
+git pull upstream master
+```
+
+#### 코드 리뷰
+
+[풀 리퀘스트](https://github.com/smartbos/hong-todo/pulls)를 리뷰해주세요.
+
+### 기능 제안
+만들어 보고 싶은 기능이 있다면 누구나 아래 문서에 기능을 추가해주세요.
+
+[사공이 많은 할일 목록 애플리케이션 기능 목록](https://docs.google.com/spreadsheets/d/11WQDfvgTCVr6ciEZcNvdnsOWow_m7ygDC9w6EnxbO2g/edit?usp=sharing)
 
 ## 후원
 라라벨 꾸준 코딩 모임은 XE가 후원해주고 있습니다.
