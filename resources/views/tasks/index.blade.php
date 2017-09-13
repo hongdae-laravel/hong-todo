@@ -41,7 +41,7 @@
             </form>
           @else
           <!-- New Task Form -->
-            <form action="{{ url('task') }}" method="POST" class="form-horizontal">
+            <form action="{{ route('tasks.store') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }}
 
             <!-- Task Name -->
