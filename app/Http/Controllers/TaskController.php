@@ -46,7 +46,11 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $tasks = Auth::user()->tasks()->get();
-        return view('tasks.index', ['tasks' => $tasks, 'task' => $task]);
+        return view('tasks.index', [
+            'tasks' => $tasks,
+            'task' => $task,
+            'now' => time() // 현재시간
+        ]);
     }
 
     public function update(StoreTaskRequest $request, $id)
