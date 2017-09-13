@@ -20,8 +20,11 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $task = null;
+        $tasks = null;
 
-        $tasks = $this->tasks->forUser($request->user());
+        if($request->user()) {
+            $tasks = $this->tasks->forUser($request->user());
+        }
 
         return view('tasks.index', [
             'tasks' => $tasks,
