@@ -30,6 +30,19 @@
                 </div>
               </div>
 
+            <!-- 달력 컴포넌트 -->
+              <div class="form-group">
+                <label for="due-date" class="col-sm-3 control-label">Due Date</label>
+                <div class="col-sm-6">
+                  <div class='input-group date' id='due-date'>
+                      <input type='text' class="form-control" name="due_date" value="{{ $task->due_date }}" placeholder="만료일">
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+                </div>
+              </div>
+
               <!-- Add Task Button -->
               <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
@@ -96,8 +109,8 @@
 
                 <tr data-id="{{ $task->id }}">
                   <td class="table-text">
-                    <div><span>{{ $task->getFormattedDate($task) }}</span> 
-                    <span class="label label-default" data-toggle="tooltip" data-placement="top" title="{{ $task->due_date }}">{{ $task->getDdays($now) }}</span> 
+                    <div><span>{{ $task->getFormattedDate($task) }}</span>
+                    <span class="label label-default" data-toggle="tooltip" data-placement="top" title="{{ $task->due_date }}">{{ $task->getDdays($now) }}</span>
                     {{ $task->name }}</div>
                     <input type="text" class="tags" name="tags" value="{{ $task->getTagNamesToCsv($task) }}" data-role="tagsinput" placeholder="Tag (comma separated)">
                   </td>

@@ -57,6 +57,7 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         $task->name = $request->input('name');
+        $task->due_date = $request->input('due_date');
         $task->save();
 
         return redirect('/tasks');
