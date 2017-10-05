@@ -11,8 +11,9 @@ class Task extends Model
     use Taggable;
 
     protected $fillable = [
-      'name',
-      'due_date' // 완료일
+        'name',
+        'due_date',
+        'closed_at',
     ];
 
     public function user()
@@ -54,5 +55,18 @@ class Task extends Model
         }
 
         return $result;
+    }
+
+    /* 완료 표시하기 */
+    public function close()
+    {
+        date_default_timezone_set('Asia/Seoul'); // 한국시간 문제
+        $this->update(['closed_at' => Carbon::now()]);
+    }
+
+    public function reopen()
+    {
+        date_default_timezone_set('Asia/Seoul'); // 한국시간 문제
+        $this->update(['closed_at' => null]);
     }
 }

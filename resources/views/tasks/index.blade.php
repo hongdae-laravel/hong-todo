@@ -111,10 +111,33 @@
                   <td class="table-text">
                     <div><span>{{ $task->getFormattedDate($task) }}</span>
                     <span class="label label-default" data-toggle="tooltip" data-placement="top" title="{{ $task->due_date }}">{{ $task->getDdays($now) }}</span>
-                    {{ $task->name }}</div>
+                    @if( $task->closed_at )
+                      <s>{{ $task->name }}</s>
+                    @else
+                      <span>{{ $task->name }}</span>
+                    @endif
+                    </div>
                     <input type="text" class="tags" name="tags" value="{{ $task->getTagNamesToCsv($task) }}" data-role="tagsinput" placeholder="Tag (comma separated)">
                   </td>
-
+                  <!-- Task Done Button -->
+                  <td>
+                    <form action="{{ url('tasks/' . $task->id) }}" method="POST">
+                      {{ csrf_field() }}
+                      {{ method_field('put') }}
+                      <input type="hidden" name="name" id="task-name" class="form-control" value="{{ $task->name }}">
+                      <input type='hidden' class="form-control" name="due_date" value="{{ $task->due_date }}" placeholder="만료일">
+                      @if( $task->closed_at )
+                        <button type="submit"  class="btn btn-danger">
+                          <i class="fa fa-btn fa-circle-o"></i> 열기
+                        </button>
+                      @else
+                        <input type='hidden' class="form-control" name="closed_at" value="1">
+                        <button type="submit"  class="btn btn-primary">
+                          <i class="fa fa-btn fa-close"></i> 닫기
+                        </button>
+                      @endif
+                    </form>
+                  </td>
                   <!-- Task Delete Button -->
                   <td>
                     <form action="{{ url('tasks/' . $task->id) }}" method="POST">

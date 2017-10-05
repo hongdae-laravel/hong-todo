@@ -37,7 +37,8 @@ class TaskController extends Controller
     {
         $request->user()->tasks()->create([
             'name' => $request->name,
-            'due_date' => $request->due_date // 완료일 추가
+            'due_date' => $request->due_date, // 완료일 추가
+            'closed_at' => null,
         ]);
 
         return redirect('/tasks');
@@ -58,6 +59,15 @@ class TaskController extends Controller
         $task = Task::find($id);
         $task->name = $request->input('name');
         $task->due_date = $request->input('due_date');
+
+        // 완료 여부 표시
+        if( $request->input('closed_at') )
+        {
+            $task->close();
+        } else {
+            $task->reopen();
+        }
+
         $task->save();
 
         return redirect('/tasks');
