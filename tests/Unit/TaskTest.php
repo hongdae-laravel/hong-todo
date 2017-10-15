@@ -42,7 +42,9 @@ class TaskTest extends TestCase
         // DB에 closed_at 컬럼이 있는지 확인하기 위해 체크
         $this->assertDatabaseHas('tasks', ['closed_at' => null]);
 
-        $task->close();
+        $task->update([
+            'closed_at' => Carbon::now(),
+        ]);
         $this->assertNotNull($task->fresh()->closed_at);
 
         // teardown
@@ -54,7 +56,9 @@ class TaskTest extends TestCase
     {
         $task = factory(Task::class)->create(['closed_at' => Carbon::now()]);
 
-        $task->reopen();
+        $task->update([
+            'closed_at' => null,
+        ]);
         $this->assertNull($task->fresh()->closed_at);
 
         // teardown

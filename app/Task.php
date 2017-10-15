@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property static closed_at
+ */
 class Task extends Model
 {
     use Taggable;
@@ -43,7 +46,6 @@ class Task extends Model
     /* D-Day 구하기 */
     public function getDdays( $now )
     {
-        date_default_timezone_set('Asia/Seoul'); // 한국시간 문제
         // return ;
         $result = "UNLIMIT";
         if ( isset($this->due_date) ) {
@@ -60,13 +62,11 @@ class Task extends Model
     /* 완료 표시하기 */
     public function close()
     {
-        date_default_timezone_set('Asia/Seoul'); // 한국시간 문제
-        $this->update(['closed_at' => Carbon::now()]);
+        $this->closed_at = Carbon::now();
     }
 
     public function reopen()
     {
-        date_default_timezone_set('Asia/Seoul'); // 한국시간 문제
-        $this->update(['closed_at' => null]);
+        $this->closed_at = null;
     }
 }

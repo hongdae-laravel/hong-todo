@@ -24,10 +24,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Task::class, function (Faker\Generator $faker) {
+    if(App\User::first()) {
+        $user = App\User::first();
+    } else {
+        $user = factory(App\User::class)->create();
+    }
     return [
-        'user_id' => function() {
-            return App\User::find(1);
-        },
+        'user_id' => $user->id,
         'name' => $faker->name,
     ];
 });
